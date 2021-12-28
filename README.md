@@ -1,1 +1,1 @@
-# mie-gacoan-simulation
+# Mie Gacoan Restaurant Simulation
