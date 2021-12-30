@@ -1,3 +1,5 @@
+import csv
+
 import simpy
 from tabulate import tabulate
 
@@ -38,7 +40,50 @@ if __name__ == "__main__":
     else:
         env = simpy.Environment()
 
-    simulation = Gacoan(env)
+    CSV_PER_MINUTE_FIELDS = [
+        "cashier",
+        "boiler",
+        "fryer",
+        "mixer",
+        "topping",
+        "assembler",
+        "num_arrivals",
+    ]
 
-    env.process(simulation.run())
-    env.run(until=config.SIMULATION_TIME)
+    CSV_CUSTOMER_FIELDS = [
+        "name",
+        "quantity",
+        "arrival_time",
+        "being_served_time",
+        "served_time",
+    ]
+
+    # Insert field names
+    with open(
+        f"./output/{config.CSV_FILE_PER_MINUTE_RESULT}", "w", newline="", encoding="utf-8"
+    ) as csv_file_per_minute, open(
+        f"./output/{config.CSV_FILE_CUSTOMER_RESULT}", "w", newline="", encoding="utf-8"
+    ) as csv_file_customer:
+        csv.DictWriter(csv_file_per_minute, fieldnames=CSV_PER_MINUTE_FIELDS).writeheader()
+        csv.DictWriter(csv_file_customer, fieldnames=CSV_CUSTOMER_FIELDS).writeheader()
+
+    # Open csv files and run the simulation
+    with open(
+        f"./output/{config.CSV_FILE_PER_MINUTE_RESULT}", "a", newline="", encoding="utf-8"
+    ) as csv_file_per_minute, open(
+        f"./output/{config.CSV_FILE_CUSTOMER_RESULT}", "a", newline="", encoding="utf-8"
+    ) as csv_file_customer:
+        simulation = Gacoan(
+            env,
+            csv_writer_per_minute=csv.DictWriter(
+                csv_file_per_minute,
+                fieldnames=CSV_PER_MINUTE_FIELDS,
+            ),
+            csv_writer_customer=csv.DictWriter(
+                csv_file_customer,
+                fieldnames=CSV_CUSTOMER_FIELDS,
+            ),
+        )
+
+        env.process(simulation.run())
+        env.run(until=config.SIMULATION_TIME)

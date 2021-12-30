@@ -6,8 +6,8 @@ from gacoan.roles import Role
 
 class Mixer(Role):
     """
-    Role yang bertugas untuk menangani pengaudukan mie dengan bumbu.
+    Role in charge of handling complaints of noodles with spices.
     """
 
-    def __init__(self, env: simpy.RealtimeEnvironment) -> None:
+    def __init__(self, env: simpy.Environment) -> None:
         super().__init__(env, config.MIXER_CAPACITY, config.MIXER_TIME)

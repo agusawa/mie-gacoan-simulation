@@ -5,7 +5,7 @@ Configuration
 REALTIME_MODE: bool = True
 MONITORING_MODE: bool = True
 SIMULATION_TIME: int = 240  # In minutes
-SIMULATION_FACTOR: float = 0.6
+SIMULATION_FACTOR: float = 0.1
 
 ARRIVAL_RATE: float = 0.630  # In minutes
 MAX_ARRIVALS: int = 154
@@ -28,3 +28,7 @@ FRYER_TIME: float = 2
 MIXER_TIME: float = 0.25
 TOPPING_TIME: float = 0.25
 ASSEMBLER_TIME: float = 0.25
+
+"""CSV"""
+CSV_FILE_PER_MINUTE_RESULT: str = "per-minute.csv"
+CSV_FILE_CUSTOMER_RESULT: str = "customer.csv"
